@@ -1,11 +1,16 @@
 import json
 
 wins = [
-    "111000000", "000111000", "000000111",    # Across
-    "100100100", "010010010", "001001001",    # Down
-    "100010001", "001010100"                  # Diagonal
+    '111 000 000', '000 111 000', '000 000 111',    # Across
+    '100 100 100', '010 010 010', '001 001 001',    # Down
+    '100 010 001', '001 010 100'                  # Diagonal
 ]
 
+# Store winning boards as integers
+wins = [int(w.replace(' ', ''), 2) for w in wins]
+
+# Returns True if board is a winning position
+winning_board = lambda b: any((b & w) == w for w in wins)
 
 #Create string from array for X
 def createStringX(row):
@@ -36,11 +41,10 @@ def createStringO(row):
 
 #Compare win string and current string
 def isDraw(row_str_X, row_str_O):
-    for wins_str in wins:
-        if (wins_str == row_str_X):
-            return False
-        if (wins_str == row_str_O):
-            return False
+    if (winning_board(int(row_str_X,2))):
+        return False
+    if (winning_board(int(row_str_O,2))):
+        return False
     return True
 
 
